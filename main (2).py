@@ -6,14 +6,7 @@ import pandas as pd
 import os
 import logging
 import aiofiles  
-import asyncio
 from keyboards import *
-from aiogram.types import InlineKeyboardButton
-import os
-import pandas as pd
-from aiogram import types
-from aiogram.dispatcher import FSMContext
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 
@@ -30,8 +23,17 @@ logger = logging.getLogger(__name__)
 EXCEL_FILE = 'users_data.xlsx'
 BOT_TOKEN = "7753196829:AAE6G8mobolxxyA4ntnjfe4VX5VCCh9LGYI"
 TOPICS_FILE = 'topics.txt'
-ADMIN_CHAT_ID="857663686"
+ADMIN_CHAT_ID="857663686" #442532106
 ALONE_FILE = 'alone.xlsx'
+#CONTACT_LINK='https://t.me/@balandina_vy'
+
+# Инициализация бота и диспетчера
+bot = Bot(token=BOT_TOKEN)
+storage = MemoryStorage()
+dp = Dispatcher(bot=bot, storage=storage)
+
+# Глобальный словарь для хранения тем
+topics_dict = {}
 
 # --- Состояния FSM ---
 class UserStates(StatesGroup):
@@ -39,7 +41,7 @@ class UserStates(StatesGroup):
     GroupState = State()
     TopicState = State()
     AnswerState = State()
-
+    #SearchState = State()
 # --- Функции для работы с Excel ---
 def create_excel_file():
     """Создает Excel файл с заголовками, если он не существует."""
@@ -160,16 +162,9 @@ async def set_commands(bot: Bot):
         types.BotCommand(command="/profile", description="Мой профиль"),
         types.BotCommand(command="/topics", description="Выбрать тему"),
         types.BotCommand(command="/answer", description="Вопрос-ответ"),
+        types.BotCommand(command="/contorg", description="Связь с координатором"),
     ]
     await bot.set_my_commands(commands)
-
-# Инициализация бота и диспетчера
-bot = Bot(token=BOT_TOKEN)
-storage = MemoryStorage()
-dp = Dispatcher(bot=bot, storage=storage)
-
-# Глобальный словарь для хранения тем
-topics_dict = {}
 
 
 # Обработчики команд
@@ -186,12 +181,23 @@ async def start_command(message: types.Message):
 - /topics - для выбора темы.
 - /profile - для просмотра вашего профиля.
 - /answer - для получения ответов на часто задаваемые вопросы.
+- /contorg - для связи с координатором.
 """
     try:
         await message.answer(welcome_text)
         logger.info(f"Отправлено приветственное сообщение пользователю {message.from_user.id}")
     except Exception as e:
         logger.error(f"Ошибка при отправке приветственного сообщения: {e}")
+        await message.answer("Произошла ошибка. Пожалуйста, попробуйте позже.")
+
+@dp.message_handler(commands=['contorg'])
+async def cont_command(message: types.Message):
+    cont_text="Что бы связаться с организатором перейдите по этой ссылке: [НАЖМИТЕ ТУТ](https://t.me/@balandina_vy)"
+    try:
+        await message.answer(cont_text, parse_mode="Markdown")
+        logger.info(f"Отправлена команда CONTORG пользователю {message.from_user.id}")
+    except Exception as e:
+        logger.error(f"Ошибка при отправке CONTORG: {e}")
         await message.answer("Произошла ошибка. Пожалуйста, попробуйте позже.")
 
 @dp.message_handler(commands=['help'])
@@ -331,6 +337,7 @@ async def topics_command(message: types.Message, state: FSMContext):
 
 async def show_topics_page(message: types.Message, topics: list, page: int):
     """Показывает страницу с темами."""
+    bot.send.message="Если вы хотите найти конкретную тему, воскпользейтесь командой /search"
     items_per_page = 10
     total_pages = (len(topics) + items_per_page - 1) // items_per_page
     page = max(1, min(page, total_pages))
@@ -407,6 +414,7 @@ async def process_topics_callback(callback: types.CallbackQuery, state: FSMConte
     except Exception as e:
         logger.error(f"Ошибка при обработке callback темы: {e}")
         await callback.answer("Произошла ошибка при обработке запроса")
+
 
 @dp.callback_query_handler(lambda c: c.data.startswith(('has_team_', 'no_team_')), state=UserStates.TopicState)
 async def process_team_response(callback: types.CallbackQuery, state: FSMContext):
@@ -571,6 +579,7 @@ async def answer_command(message: types.Message, state: FSMContext):
         await message.answer("❌ Произошла ошибка при загрузке вопросов.")
         await state.finish()
 
+
 async def show_questions_page(message: types.Message, questions: list, page: int):
     """Показывает страницу с вопросами и ответами."""
     items_per_page = 3
@@ -580,7 +589,7 @@ async def show_questions_page(message: types.Message, questions: list, page: int
     end_idx = min(start_idx + items_per_page, len(questions))
 
     questions_text = "📚 Часто задаваемые вопросы:\n\n"
-    questions_text += "Если вы хотите задать свой вопрос, обратитесь к админу @Nothingness105\n\n"
+    questions_text += "Если вы хотите задать свой вопрос, воспользуйтесь командой /contorg\n\n"
     
     for i in range(start_idx, end_idx):
         q, a = questions[i]
@@ -669,8 +678,8 @@ async def errors_handler(update, exception):
 async def on_startup(_):
     """Функция, которая выполняется при запуске бота."""
     try:
-        create_excel_file()  # Создаем Excel файл, если он не существует
-        await set_commands(bot)  # Устанавливаем команды бота
+        create_excel_file()  
+        await set_commands(bot)  
         logger.info("Бот запущен")
     except Exception as e:
         logger.error(f"Ошибка при инициализации: {e}")

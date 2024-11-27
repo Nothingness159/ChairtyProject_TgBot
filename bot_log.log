@@ -2343,3 +2343,41 @@ Traceback (most recent call last):
 aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
 2024-11-17 21:21:56,493 - __main__ - INFO - Пользователь 6697429544 вызвал команду /start
 2024-11-17 21:21:56,642 - __main__ - INFO - Отправлено приветственное сообщение пользователю 6697429544
+2024-11-27 19:04:37,299 - aiogram - INFO - Bot: 46735ао [@egorsosalBOT]
+2024-11-27 19:04:37,899 - aiogram - WARNING - Updates were skipped successfully.
+2024-11-27 19:04:37,899 - __main__ - INFO - Файл эксель уже создан
+2024-11-27 19:04:38,229 - __main__ - INFO - Бот запущен
+2024-11-27 19:04:38,229 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2024-11-27 19:04:38,732 - __main__ - INFO - Пользователь 857663686 вызвал команду /start
+2024-11-27 19:04:41,629 - __main__ - INFO - Отправлено приветственное сообщение пользователю 857663686
+2024-11-27 19:04:44,838 - __main__ - INFO - Отправлена команда CONTORG пользователю 857663686
+2024-11-27 19:05:18,818 - aiogram - INFO - Bot: 46735ао [@egorsosalBOT]
+2024-11-27 19:05:18,984 - aiogram - WARNING - Updates were skipped successfully.
+2024-11-27 19:05:18,985 - __main__ - INFO - Файл эксель уже создан
+2024-11-27 19:05:19,175 - __main__ - INFO - Бот запущен
+2024-11-27 19:05:19,176 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2024-11-27 19:05:20,844 - __main__ - INFO - Отправлена команда CONTORG пользователю 857663686
+2024-11-27 19:08:54,746 - aiogram - INFO - Bot: 46735ао [@egorsosalBOT]
+2024-11-27 19:08:54,957 - aiogram - WARNING - Updates were skipped successfully.
+2024-11-27 19:08:54,958 - __main__ - INFO - Файл эксель уже создан
+2024-11-27 19:08:55,079 - __main__ - INFO - Бот запущен
+2024-11-27 19:08:55,079 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2024-11-27 19:08:56,078 - __main__ - INFO - Отправлена команда CONTORG пользователю 857663686
+2024-11-27 19:11:53,037 - aiogram - INFO - Bot: 46735ао [@egorsosalBOT]
+2024-11-27 19:11:53,243 - aiogram - WARNING - Updates were skipped successfully.
+2024-11-27 19:11:53,243 - __main__ - INFO - Файл эксель уже создан
+2024-11-27 19:11:53,393 - __main__ - INFO - Бот запущен
+2024-11-27 19:11:53,393 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2024-11-27 19:11:55,809 - __main__ - INFO - Отправлена команда CONTORG пользователю 857663686
+2024-11-27 19:14:22,180 - aiogram - INFO - Bot: 46735ао [@egorsosalBOT]
+2024-11-27 19:14:22,408 - aiogram - WARNING - Updates were skipped successfully.
+2024-11-27 19:14:22,408 - __main__ - INFO - Файл эксель уже создан
+2024-11-27 19:14:22,527 - __main__ - INFO - Бот запущен
+2024-11-27 19:14:22,527 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2024-11-27 19:14:23,253 - __main__ - INFO - Отправлена команда CONTORG пользователю 857663686
+2024-11-27 19:16:12,131 - aiogram - INFO - Bot: 46735ао [@egorsosalBOT]
+2024-11-27 19:16:12,744 - aiogram - WARNING - Updates were skipped successfully.
+2024-11-27 19:16:12,745 - __main__ - INFO - Файл эксель уже создан
+2024-11-27 19:16:12,934 - __main__ - INFO - Бот запущен
+2024-11-27 19:16:12,935 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2024-11-27 19:16:13,681 - __main__ - INFO - Отправлена команда CONTORG пользователю 857663686

@@ -16,24 +16,6 @@ def create_pagination_keyboard(current_page, total_pages, callback_prefix="page_
     keyboard.add(*buttons)
     return keyboard
 
-def get_keyboard():
-    """Создает основную клавиатуру с кнопками команд"""
-    keyboard = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, row_width=2)
-    
-    # Добавляем основные кнопки
-    keyboard.add(
-        KeyboardButton("/help"),
-        KeyboardButton("/profile")
-    )
-    keyboard.add(
-        KeyboardButton("/registr"),
-        KeyboardButton("/topics")
-    )
-    keyboard.add(
-        KeyboardButton("/answer")
-    )
-    
-    return keyboard
 
 def create_topic_selection_keyboard(topics, page, items_per_page=10):
     """Создает клавиатуру для выбора темы с пагинацией"""
