@@ -618,6 +618,7 @@ async def process_topics_callback(callback: types.CallbackQuery, state: FSMConte
                 reply_markup=ReplyKeyboardRemove()
             )
             await callback.answer()
+            await state.finish()
             return
 
         if callback.data.startswith('page_'):
