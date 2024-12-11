@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 # Константы
 EXCEL_FILE = 'users_data.xlsx'
-BOT_TOKEN = "7753196829:AAE6G8mobolxxyA4ntnjfe4VX5VCCh9LGYI"
+BOT_TOKEN = "7791083296:AAEQ-qd6JLhFOhhuTrf8ismg7Bb857u_nh8"
 TOPICS_FILE = 'topics.txt'
 ADMIN_CHAT_ID="857663686" #442532106
 ALONE_FILE = 'alone.xlsx'
@@ -263,7 +263,7 @@ async def show_image(message: types.Message):
             # Храним message_id для последующего удаления
             async with dp.current_state().proxy() as data:
                 data['message_id'] = (await message.answer_photo(types.InputFile(image_path), 
-                                                                  caption=f"Изображение {data['current_image']} из {data['total_images']}", 
+                                                                  caption=f"{data['current_image']} / {data['total_images']}", 
                                                                   reply_markup=get_nav_keyboard(data['current_image'], data['total_images'])))['message_id']
     except Exception as e:
         logger.error(f"Ошибка при показе изображения: {e}")
@@ -435,11 +435,11 @@ async def example_here(message: types.Message):
         async with dp.current_state().proxy() as data:
             data['image_dir'] = 'images/'
             data['current_image'] = 1
-            data['total_images'] = len([name for name in os.listdir(data['image_dir']) if name.endswith('.jpg')])  # Подсчитываем jpg файлы
+            data['total_images'] = len([name for name in os.listdir(data['image_dir']) if name.endswith('.jpg')]) 
             if data['total_images'] == 0:
                 raise FileNotFoundError("Нет изображений в директории")
         
-        await UserStates.ExampleState.set()  # Устанавливаем состояние
+        await UserStates.ExampleState.set()
         await show_image(message)
     except FileNotFoundError as e:
         await message.answer("Нет изображений для показа.")
@@ -451,10 +451,9 @@ async def example_here(message: types.Message):
 async def navigate_images(callback: types.CallbackQuery, state: FSMContext):
     try:
         # Проверка возврата в главное меню
-        if callback.data == "back_to_menun":
+        if callback.data == "back_to_menu":
             await state.finish()
             await callback.message.delete() 
-            await callback.message.answer("Вы вернулись в главное меню.")
             await callback.answer()
             return
 
@@ -532,7 +531,8 @@ async def user_group_here(message: types.Message, state: FSMContext):
                 "✅ Группа успешно добавлена!\n\n"
                 "Теперь вы можете:\n"
                 "- Посмотреть свой профиль: /profile\n"
-                "- Выбрать тему: /topics"
+                "- Ознакомиться с примерами проектов: /example\n"
+                "- Обратиться к часто задаваемым вопросам: /answer"
             )
             await state.finish()
         else:
@@ -609,7 +609,6 @@ async def process_topics_callback(callback: types.CallbackQuery, state: FSMConte
 
         if callback.data == "back_to_main":
             await state.finish()
-            await callback.message.edit_text("Вы вернулись в главное меню.")
             return
         
         elif callback.data == 'show_search_hint':
@@ -618,6 +617,7 @@ async def process_topics_callback(callback: types.CallbackQuery, state: FSMConte
                 reply_markup=ReplyKeyboardRemove()
             )
             await callback.answer()
+            await state.finish()
             return
 
         if callback.data.startswith('page_'):
@@ -777,7 +777,6 @@ async def show_questions_page(message: types.Message, questions: list, page: int
 
             if callback.data == "back_to_main_from_answers":
                 await state.finish()
-                await callback.message.edit_text("Вы вернулись в главное меню.")
                 return
 
             if callback.data.startswith('answer_page_'):
@@ -961,7 +960,6 @@ async def unknown_command(message: types.Message):
             await message.answer("❌ Неизвестная команда...\nИспользуйте /help для просмотра списка доступных команд.")
             logger.warning(f"Пользователь {message.from_user.id} ввел неизвестную команду: {command}")
     else:
-        # Сообщение начинается с "/", но не является командой
         logger.info(f"Пользователь {message.from_user.id} отправил сообщение, начинающееся с '/', но без команды: {message.text}")
 
 #<<---До отправки команды старт--->
